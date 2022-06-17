@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+
+			console.clear();
+
+	var num = 1;
+
+	setInterval(function() {
+		console.log(num + "초가 지났습니다.");
+		
+		setTimeout(function() {
+			console.clear();
+		}, 920)
+		
+		num++;
+		
+	}, 1000	);
+</script>
+</head>
+<body>
+
+</body>
+</html>
