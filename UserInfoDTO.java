@@ -4,6 +4,9 @@ public class UserInfoDTO {
 	private int student_no;
 	private String user_id, user_pw, first_name, last_name, create_ymd, update_ymd;
 	
+	//비어있는 생정자 만들어 두면 깔끔하긴 함
+	public UserInfoDTO() {};
+	
 	public UserInfoDTO(int student_no, String user_id, String user_pw, String first_name, String last_name,
 			String create_ymd, String update_ymd) {
 		//super();
