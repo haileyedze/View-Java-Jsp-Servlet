@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>JspServlet 첫 시간</title>
+</head>
+<body>
+	<h4>실행되었습니다.</h4>
+	<!-- action 페이지 이동, url 요청(), Method = 데이터가 있다면 전송 방식 GET, POST -->
+	<form action="Ex01_ServletTest" method="post">
+		<!-- Button 태그 사용 X ☞ 클릭도 담당을 하지만 자동으로 submit 해버림, input 사용 -->
+		<input type="submit" value="1번 Post 전송">
+	</form>
+	<br>
+	<form action="Ex02_ServletTest" method="get">
+		<input type="submit" value="2번 Get 전송">
+	</form>
+	<br>
+	<form action="Ex02_ServletTest" method="post">
+		<input type="submit" value="2번 Post 전송">
+	</form>
+	<br>
+	<form action="Happy" method="post">
+		<input type="submit" value="3번 Post 전송">
+	</form>
+	<br>
+	<form action="e4" method="post">
+		<input type="submit" value="4번 Post 전송">
+	</form>
+</body>
+</html>
