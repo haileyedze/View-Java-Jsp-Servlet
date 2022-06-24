@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>전역변수와 지역변수</title>
 </head>
 <body>
 	<!-- 전역변수 만들어보기 (String 변수, double 변수, String[] 배열 4개 이상 (배열 내용 T, E, S, T))-->
