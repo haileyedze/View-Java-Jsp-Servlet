@@ -3,7 +3,9 @@ package student;
 public class StudentDTO {
 	private int student_no, money;
 	private String student_name, user_id, user_pw, first_name, last_name, create_ymd, update_ymd, admin_yn;
-
+	
+	public StudentDTO() {}
+	
 	public StudentDTO(String student_name, String user_id, String user_pw, String first_name, String last_name,
 			int student_no) {
 		this.student_name = student_name;

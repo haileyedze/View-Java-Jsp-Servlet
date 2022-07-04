@@ -1,6 +1,8 @@
 package Controller;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -20,11 +22,12 @@ public class StudentCotroller extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		rd = req.getRequestDispatcher("error/404.jsp"); // 나중에 추가 예정(2022.06.30 KYM)
-		if(req.getServletPath().equals("/list.st")) {	
+		if(req.getServletPath().equals("/list.st")) {
 			//추후 DB에서 가져온 정보를 이용 =>지금은 ArrayList를 수동으로 만들기
-			ArrayList<StudentDTO> list = dao.getManualList();
-			Object oList = dao.getManualList();
-			list = (ArrayList<StudentDTO>) oList;
+			//ArrayList<StudentDTO> list = dao.getManualList();
+			//Object oList = dao.getManualList();
+			//list = (ArrayList<StudentDTO>) oList;
+			ArrayList<StudentDTO> list = dao.getList();
 			
 			req.setAttribute("list", list);
 			/*
@@ -33,8 +36,73 @@ public class StudentCotroller extends HttpServlet {
 			 */
 			// JSP 에 보내서 출력 해보기
 			rd = req.getRequestDispatcher("student/list.jsp");
-		}
+		}else if(req.getServletPath().equals("/test.st")) {
+			Connection conn = dao.getConn();
+//			try {
+//				if(conn.isClosed())	{
+//					System.out.println("닫힘");
+//				}else {
+//					System.out.println("열림");
+//					dao.selectOne();
+					//dao.getList();
+					ArrayList<StudentDTO> stList = dao.getList();
+					//디비연결 테스트 했음
+					System.out.println(stList.size());
+					for (int i = 0; i < stList.size(); i++) {
+							System.out.println(stList.get(i).getStudent_no());
+					}//for
+//				}//if
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+			dao.dbClose();
+		}else if(req.getServletPath().equals("/detail.st")) {
+			//파리메터 사용 이유 : 태그들을 간단히 보내기 위해 form 태그나 a 태그 사용하고, get 방식 사용했으므로 parameter로 받아옴
+			//req.getParameter("user_id");
+			System.out.println(req.getParameter("student_no"));
+			System.out.println(req.getParameter("user_id"));
+			//dao메소드 만들어서 학생 리스트 확인하기, getStudentInfo메소드 만들기(리턴타입 등등 자유롭게)
+			//DTO 데이터베이스 컬럼이랑 맞춰서 만들어 놓은 클래스(필드==데이터베이스 컬럼)
+			//학생 한명의 정보를 자세하게 보여주기 위해서
+			StudentDTO dto = (StudentDTO) dao.getStudentInfo(Integer.parseInt(req.getParameter("student_no")), req.getParameter("user_id"));
+			//StudentDTO dto = (StudentDTO) dao.getStudentInfo(req);
+			System.out.println(dto.getUser_id());
+			//detail.jsp ← 상세정보를 확인할 수 있는 페이지
+			//헤더, 푸터 그대로 있고 내용만 바뀌게 해보기
+			req.setAttribute("dto", dto); //오타만 안나면 됨
+			//1. 페이지 전환의 기본 rd = req.getRequestDispatcher
+			rd = req.getRequestDispatcher("student/detail.jsp");
+			System.out.println(rd);
+		}else if(req.getServletPath().equals("/update.st")) {
+			//System.out.println(req.getParameter("student_no"));
+			//System.out.println(req.getParameter("user_id"));
+			StudentDTO dto = dao.getStudentInfo(Integer.parseInt(req.getParameter("student_no")), req.getParameter("user_id"));
+			req.setAttribute("dto", dto);
+			rd = req.getRequestDispatcher("student/update.jsp");
+			//dto.setStudent_name()
+			
+			
+			
+		}else if(req.getServletPath().equals("/delete.st")) {
+			rd = req.getRequestDispatcher("student/delete.jsp");
+		}else if(req.getServletPath().equals("/login.st")) {
+			rd = req.getRequestDispatcher("student/login.jsp");
+			System.out.println("rd : "+rd);
+//			req.getParameter("id");
+//			req.getParameter("pw");
+		}else if(req.getServletPath().equals("/result.st")) {
+			Connection conn = dao.getConn();
+			ArrayList<StudentDTO> stList = dao.getList();
+			System.out.println(stList.size());
+			rd = req.getRequestDispatcher("student/Failed.jsp");
+			for (int i = 0; i < stList.size(); i++) {
+				if(stList.get(i).getUser_id().equals(req.getParameter("id")) && stList.get(i).getUser_pw().equals(req.getParameter("pw"))) {
+					System.out.println("학생번호 : " + stList.get(i).getStudent_no());
+					rd = req.getRequestDispatcher("index.jsp");
+				}//if
+			}//for	
+		}//if
 		rd.forward(req, resp);
 	}
-
-}
+	
+}//class

@@ -24,6 +24,7 @@
 		// && AND 논리곱, 곱하기 , 하나의 조건이라도 TRUE가 나와도 뒤에 조건이 FALSE가 나오면 비교안함
 		// 김 또는 이 == 로그인 OR
 		// 김씨만 AND
+		//이거 신기함
 		if( request.getParameter("id") != null &&
 			request.getParameter("pw") != null &&
 			request.getParameter("id").equals("admin") &&
