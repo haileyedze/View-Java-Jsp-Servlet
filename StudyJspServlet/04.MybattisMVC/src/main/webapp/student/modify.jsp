@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	삭제완료!
+	<%@include file = "/include/header.jsp" %>
+	<p>수정완료</p>
+	<%@include file = "/include/footer.jsp" %>
 </body>
 </html>

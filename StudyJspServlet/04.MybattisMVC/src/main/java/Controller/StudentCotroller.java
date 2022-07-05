@@ -80,11 +80,34 @@ public class StudentCotroller extends HttpServlet {
 			req.setAttribute("dto", dto);
 			rd = req.getRequestDispatcher("student/update.jsp");
 			//dto.setStudent_name()
+		}else if(req.getServletPath().equals("/modify.st")) {
+			//System.out.println(req.getParameter("student_no"));
+			//System.out.println(req.getParameter("user_id"));
+			//수정하는 로직을 작성하기
+			//name 제외, first_name, last_name 만 수정되게끔 처리
+			//업데이트 쿼리를 실행하고 나서 0보다 큰 숫자가 리턴되는지를 체크해보기
+			// DAO이용한 업데이트 처리 ?( from태그 또는 url(get)방식으로 Servlet에 왔을때 파라메터가 어디있는지?)
+			//dao.modify(req.getParameter("first_name"), req.getParameter("last_name"), Integer.parseInt(req.getParameter("student_no")), req.getParameter("user_id"));
+			//rd = req.getRequestDispatcher("student/modify.jsp");
 			
-			
-			
+			StudentDTO dto = new StudentDTO(
+					null, // student_name 수정안할꺼임 데이터 필요없음 
+					req.getParameter("user_id"), 
+					null, 
+					req.getParameter("first_name"), 
+					req.getParameter("last_name"), 
+					Integer.parseInt(req.getParameter("student_no")));
+			dao.modifyInfo(dto);
+			//어떤 데이터를 넘길필요가없음.(페이지 새로고침만하면됨)
+			//rd = req.getRequestDispatcher("student/list.jsp");
+			resp.sendRedirect("list.st");
+			return; //rd.forward가 다시 실행 안하게 함
 		}else if(req.getServletPath().equals("/delete.st")) {
-			rd = req.getRequestDispatcher("student/delete.jsp");
+			//DAO를 통한 삭제 처리
+			dao.delete(req.getParameter("student_no"), req.getParameter("user_id"));
+			//rd = req.getRequestDispatcher("student/delete.jsp");
+			resp.sendRedirect("list.st");
+			return; //rd.forward가 다시 실행 안하게 함
 		}else if(req.getServletPath().equals("/login.st")) {
 			rd = req.getRequestDispatcher("student/login.jsp");
 			System.out.println("rd : "+rd);

@@ -39,7 +39,7 @@
 	<%@ include file = "/include/header.jsp" %>
 
 	<h1>학생정보를 보여 줍니다</h1>
-
+	<%-- <% response.setIntHeader("Refresh", 3); %> --%>
 	<%
 		ArrayList<StudentDTO> list =( ArrayList<StudentDTO> ) request.getAttribute("list");
 	%>

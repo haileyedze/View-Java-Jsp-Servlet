@@ -138,21 +138,67 @@ public class StudentDAO {
 		return dto;
 	}
 	
-	//Update 메소드 만들어보기
-	public StudentDTO updateInfo() {
+	//수정하기1
+	public int modify(String first_name, String last_name, int student_no, String user_id) {
 		getConn();
-		
-		
-		
-		return null;
+		String sql = "UPDATE user_info SET first_name = ?, last_name = ? WHERE student_no = ? AND user_id = ?";
+		int a=0;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, first_name);
+			ps.setString(2, last_name);
+			ps.setInt(3, student_no);
+			ps.setString(4, user_id);
+			a= ps.executeUpdate();
+			System.out.println(a);
+		} catch (Exception e) {
+			System.out.println("업데이트 에러");
+			e.printStackTrace();
+		}finally {
+			dbClose();
+		}
+		return a;
+	}//updateInfo()
+	
+	//수정하기2
+	public int modifyInfo(StudentDTO dto) {
+		getConn();
+		String sql = "UPDATE user_info SET first_name = ?, last_name = ? WHERE student_no = ? AND user_id = ?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, dto.getFirst_name());
+			ps.setString(2, dto.getLast_name());
+			ps.setInt(3, dto.getStudent_no());
+			ps.setString(4, dto.getUser_id());
+			return ps.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("업데이트 에러");
+			e.printStackTrace();
+		}finally {
+			dbClose();
+		}
+		return 1;
 	}
 	
-	
-	
-	//DB ArrayList로 받아오기
-	public void check(){
-
-	}//getInfo()
+	//회원정보 삭제
+	public int delete(String student_no, String user_id) {
+		conn = getConn();
+		int a=0;
+		String sql = "DELETE FROM user_info WHERE student_no = ? AND user_id= ? ";
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, student_no);
+			ps.setString(2, user_id);
+			a = ps.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("delete error!");
+			e.printStackTrace();
+		}finally {
+			dbClose();
+		}
+		return a;
+	}//delete
 	
 	//로그인 메소드 작성
 	public void login() {
@@ -180,6 +226,5 @@ public class StudentDAO {
 		}//for
 		return list;
 	}//getManualList
-	
-	
+
 }//class

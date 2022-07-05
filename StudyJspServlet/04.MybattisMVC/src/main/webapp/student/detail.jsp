@@ -93,10 +93,40 @@
 					<input type="submit" value="수정하기">
 			</form>
 			 / 
-			<a href="delete.st?student_no=<%=dto.getStudent_no() %>&user_id=<%= dto.getUser_id()%>">삭제하기</a>
+			<%-- <a href="delete.st?student_no=<%=dto.getStudent_no() %>&user_id=<%= dto.getUser_id()%>">삭제하기</a> --%>
+			<form action="delete.st" method="get">
+					<input type="hidden" name="student_no" id="student_no"" value="<%=dto.getStudent_no() %>">
+					<input type="hidden" name="user_id" id="user_id" value="<%=dto.getUser_id() %>">
+					<!-- <input type="submit" value="삭제하기" onclick="deleteInfo();"> -->
+					<input type="submit" value="삭제하기" onclick="deleteInfo('<%= dto.getStudent_no() %>', '<%= dto.getUser_id()%>');">
+			</form>
 			</td>
 		</tr>
 	</table>
 	<%@include file = "/include/footer.jsp" %>
+	
+	<script>
+ 		function deleteInfo(value1, value2){
+			if(confirm('정말 삭제하시겠습니까?')){
+				alert('예를 눌렀습니다. 삭제 합니다' + value1 + value2);
+				location.href='delete.st?student_no='+value1+'&user_id='value2;
+				//자바 스크립트네 student_no, user_id 올 수 있게 하기
+			}else{
+				alert('아니오 누름');
+			}
+		}
+		
+/*  		function deleteInfo(){
+			if(confirm('정말 삭제하시겠습니까?')){
+ 				//var student_no = document.getElementById("student_no");
+				//var user_id = document.getElementById("user_id");
+ 				//alert('예를 눌렀습니다. 삭제 합니다' + student_no.value + user_id.value);
+				//alert('예를 눌렀습니다. 삭제 합니다' + document.getElementById("student_no").value + document.getElementById("user_id").value);
+				
+			}else{
+				alert('아니오 누름');
+			}
+		} */
+	</script>
 </body>
 </html>

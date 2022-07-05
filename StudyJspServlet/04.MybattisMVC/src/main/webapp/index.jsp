@@ -19,7 +19,7 @@
             <div class="wrap">
                 <article>
                     <div class="youtube">
-                        <img src="https://via.placeholder.com/350"  alt="2번째 콘텐츠 이미지">
+						<iframe width="300" height="300" src="https://www.youtube.com/embed/562LXp02nuI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                     <h2><a href="#">Lorem ipsum dolor sit.</a></h2>
                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vitae minus, eaque corrupti vero ad
@@ -27,7 +27,7 @@
                 </article>
                 <article>
                     <div class="youtube">
-                        <img src="https://via.placeholder.com/350"  alt="2번째 콘텐츠 이미지">
+                        <iframe width="300" height="300" src="https://www.youtube.com/embed/562LXp02nuI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                     <h2><a href="#">Lorem ipsum dolor sit.</a></h2>
                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vitae minus, eaque corrupti vero ad
@@ -35,7 +35,7 @@
                 </article>
                 <article>
                     <div class="youtube">
-                        <img src="https://via.placeholder.com/350" alt="3번째 콘텐츠 이미지">
+                        <iframe width="300" height="300" src="https://www.youtube.com/embed/562LXp02nuI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                     <h2><a href="#">Lorem ipsum dolor sit.</a></h2>
                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vitae minus, eaque corrupti vero ad
