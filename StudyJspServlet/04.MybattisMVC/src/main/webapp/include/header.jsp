@@ -18,9 +18,10 @@
             <h1><a href="#">HANUL301</a></h1>
             <ul id="gnb">
                 <li><a href="list.st">JDBC(학생목록조회)</a></li>
+                <li><a href="list.cu">고객관리(Mybatis)</a></li>
                 <li><a href="list.hr">Mybatis(사원목록조회)</a></li>
-                <li><a href="#">JSTL사용</a></li>
-                <li><a href="#">고객관리</a></li>
+                <li><a href="list.js">JSTL사용</a></li>
+                <!-- list.jsp(jstl폴더안에있음)을 연결 -->
                 <li><a href="notice.st">게시판</a></li>
             </ul>
             <ul class="util">
