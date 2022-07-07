@@ -36,28 +36,39 @@
 </style>
 </head>
 <body>
-	<%@ include file = "/include/header.jsp" %>
-	<h1>고객 정보 조회</h1>
-	<% List<CustomerDTO> list = (List<CustomerDTO>)request.getAttribute("list"); %>
-	<%=list.size() %><!-- size 확인으로 list가 넘어왔는지 간단히 확인 -->
-	<table>
-		<tr>
-			<th>ID</th>
-			<th>NAME</th>
-			<th>GENDER</th>
-			<th>EMAIL</th>
-			<th>PHONE</th>
-		</tr>	
-		<%for(int i=0; i< list.size(); i++) {%>	
-		<tr>
-			<td><%=list.get(i).getId() %></td>
-			<td><%=list.get(i).getName() %></td>
-			<td><%=list.get(i).getGender() %></td>
-			<td><%=list.get(i).getEmail() %></td>
-			<td><%=list.get(i).getPhone() %></td>
-		</tr>
-		<%} %>
+	<%@ include file="/include/header.jsp"%>
+		<h1>고객관리 모듈</h1>
+
+<%-- 	<%=list.size() %>  list의 사이즈 1이상 들어왔는지 체크 --%>
+	<h1 style="text-align: center;"> 고객 정보 조회</h1>
+
+	<table class="styled-table">
+		<thead>
+			<tr>
+				<th>아이디</th>
+				<th>이름</th>
+				<th>성별</th>
+				<th>이메일</th>
+				<th>핸드폰</th>
+			</tr>
+		</thead>
+		<tbody>
+			<%
+			List<CustomerDTO> list =(List<CustomerDTO>) request.getAttribute("list");
+		for(int i = 0 ;  i<list.size(); i ++){
+	%>
+			<tr>
+				<td><a> <%=list.get(i).getId() %></a></td>
+				<td><a> <%=list.get(i).getName()%></a></td>
+				<td><a> <%=list.get(i).getGender()%></a></td>
+				<td><a> <%=list.get(i).getEmail()%></a></td>
+				<td><a> <%=list.get(i).getPhone()%></a></td>
+			
+			</tr>
+			
+			<%} %>
+		</tbody>
 	</table>
-	<%@ include file = "/include/footer.jsp" %>
+	<%@ include file="/include/footer.jsp"%>
 </body>
 </html>

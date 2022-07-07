@@ -12,6 +12,11 @@ a {
 	text-decoration: none;
 }
 
+body {
+	display: table;
+	margin: 0px auto;
+}
+
 /* header */
 header {
 	width: 100%;

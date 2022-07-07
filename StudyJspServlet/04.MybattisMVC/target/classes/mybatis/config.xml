@@ -14,7 +14,8 @@
       </dataSource>
     </environment>
   </environments>
-  <mappers>
+  <mappers><!-- 맵퍼가 추가될 때마다 하나씩 추가해줘야함-->
+  <!-- Spring Mybatis에서는 *mapper.xml로 여러 맵퍼를 한번에 인식가능 -->
   <!-- xml 파일 위치 설정 -->
     <mapper resource="customer/test-mapper.xml"/>
     <mapper resource="customer/cus-mapper.xml"/>

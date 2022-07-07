@@ -8,11 +8,6 @@
 <meta charset="UTF-8">
 <title>학생 정보 보기</title>
 <style>
-	body {
-		display: table;
-		margin: 0px auto;
-	}
-	
 	h1 {
 		text-align: center;
 	}
@@ -38,7 +33,7 @@
 <body>
 	<%@ include file = "/include/header.jsp" %>
 
-	<h1>학생정보를 보여 줍니다</h1>
+	<h1>학생 정보 조회</h1>
 	<%-- <% response.setIntHeader("Refresh", 3); %> --%>
 	<%
 		ArrayList<StudentDTO> list =( ArrayList<StudentDTO> ) request.getAttribute("list");
