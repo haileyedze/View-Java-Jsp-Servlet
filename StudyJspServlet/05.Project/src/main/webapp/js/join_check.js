@@ -71,10 +71,16 @@
 		else							return this.id.valid;
 	},
 	
+	id_usable: function( usable ){
+		if(usable == 1 )			return this.id.unUsable;
+		else						return this.id.usable;
+	},
+	
 	id: {
 		invalid: {code:'invalid', desc:'영문 소문자, 숫자만 입력하세요'},
-		valid: {code:'valid', desc:'사용가능한 아이디입니다'}
-		
+		valid: {code:'valid', desc:'아이디 중복확인하세요'},
+		usable: {code:'valid', desc:'사용가능한 아이디입니다'},
+		unUsable: {code:'invalid', desc:'이미 사용중인 아이디입니다'}
 	},
 	
 	common: {//공통으로 들어갈 것

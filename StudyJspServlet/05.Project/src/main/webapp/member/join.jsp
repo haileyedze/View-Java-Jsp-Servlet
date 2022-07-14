@@ -37,7 +37,7 @@
 <div class="container-fluid px-4">
 	<h3 class="mt-4">회원가입</h3>
 	<p>* 는 필수입력 항목입니다</p>
-	<form>
+	<form method='post' action='member_join.mb'>
 		<table class="w-px600">
 			<tr>
 				<th class="w-px140">* 성명</th>
@@ -100,11 +100,62 @@
 			</tr>		
 		</table>
 	</form>
+	<div class="btnSet">
+		<a class="btn-fill" onclick="fn_join()">회원가입</a>
+		<a class="btn-empty" href="javascript:history.go(-1)">취소</a>
+	</div>
 </div>
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src='js/join_check.js'></script>
-<script type="text/javascript">
+<script src='js/join_check.js?<%=new java.util.Date()%>'></script>
+<!-- 계속 리프레시 되게 만드는 방법 -->
+<script>
+//회원가입처리
+function fn_join(){
+	//필수입력항목에 입력되어있는지 확인
+	//특정항목에 대해서는 유효한 입력인지도 확인
+	if( $('[name=name]').val() == '' ){
+		alert('성명을 입력하세요');
+		$('[name=name]').focus();
+		return;
+	}
+	
+	//아이디는 중복확인여부에 따라 처리
+	//중복확인 한 경우 
+	//invalid 이면 회원가입불가
+	if( $('[name=userid]').hasClass('checked') ){
+		if( $('[name=userid]').siblings('div').hasClass('invalid') ){
+			alert('회원가입 불가!\n' + join.id.unUsable.desc );
+			$('[name=userid]').focus();
+			return;
+		}
+	}else{
+	//중복확인 하지 않은 경우
+		if( ! item_check( $('[name=userid]') ) ) return;
+		else{
+			alert('회원가입 불가!\n' + join.id.valid.desc);
+			$('[name=userid]').focus();
+			return;
+		}
+	}
+	
+	if( ! item_check( $('[name=userpw]') ) ) return;
+	if( ! item_check( $('[name=userpw_ck]') ) )  return;
+	if( ! item_check( $('[name=email]') ) )  return;
+	
+	$('form').submit();
+}
+
+function item_check( tag ){
+	var status = join.tag_status( tag );
+	if( status.code=='invalid' ) {
+		alert('회원가입 불가!\n' + status.desc );
+		tag.focus();
+		return false;
+	}else
+		return true;
+}
+
 $('#id_check').on('click', function(){
 	id_check();
 });
@@ -122,8 +173,11 @@ function id_check(){
 	$.ajax({
 		url: 'id_check.mb',
 		data: { id: $userid.val() },
-		success: function(){
-			
+		success: function( response ){
+			$userid.addClass('checked');
+			response = join.id_usable( response );
+			$userid.siblings('div').text( response.desc )
+									.removeClass().addClass( response.code );
 		},error: function(req, text){
 			alert(text +':' +req.status);
 		}
@@ -132,66 +186,72 @@ function id_check(){
 }
 
 //입력의 유효성을 판단
-$('.chk').on('keyup', function(){
+$('.chk').on('keyup', function(e){
+	if( $(this).attr('name')=='userid' ){
+		if( e.keyCode==13 ) { id_check(); return; }
+		else $(this).removeClass('checked');
+	}
 	var status = join.tag_status( $(this) );
-	$(this).siblings('div').text( status.desc ).removeClass().addClass(status.code);
+	$(this).siblings('div').text( status.desc ).removeClass().addClass( status.code );
 });
 
-//만13세까지만 가입 가능
+
+//만13세까지만 가입가능
 var today = new Date();
 var start = today.getFullYear()-100;
-today.setFullYear(today.getFullYear() - 13);
-today.setDate(today.getDate()-1);
+today.setFullYear( today.getFullYear() - 13 );
+today.setDate( today.getDate()-1 );
 var defaultDay = new Date();
-defaultDay.setFullYear(1990);	//1990-07-13일이 있는 달력이 기본으로 보이게
-	
-$( "[name=birth]" ).datepicker({
+defaultDay.setFullYear(1990); //1990-07-13 이 있는 달력이 기본으로 보이게
+
+$( "[name=birth]" ).datepicker({ 
 	dateFormat: 'yy-mm-dd',
-	dayNamesMin: ['일','월','화','수','목','금','토'],
+	dayNamesMin: [ '일', '월', '화', '수', '목', '금', '토' ],
 	showMonthAfterYear: true,
-	monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월'
+					, '7월', '8월', '9월', '10월', '11월', '12월'],
 	changeYear: true,
 	changeMonth: true,
 	//beforeShowDay: before,
 	maxDate: today,
-	yearRange: start + ':' + today.getFullYear(),
-	//yearRange: '1922:2009',
+	yearRange: start +':'+today.getFullYear(),
 	defaultDate: defaultDay,
 });
 
-//특정날짜(오늘)까지만 선택할 수 있게
-function before(date) {
-	if(date > new Date())	return [false];
-	else					return [true];
+
+//특정날짜(오늘)까지만 선택할수 있게
+function before(date){
+	if( date > new Date() ) return [false];
+	else 					return [true];
 }
 
-//생년월일을 변경하면 삭제이미지가 보이게
+//생년월일을 변경되면 삭제이미지가 보이게
 $('[name=birth]').change(function(){
-	$('#delete').css('display','inline');
+	$('#delete').css('display', 'inline');
 });
 
 //달력삭제 클릭시 생년월일 없애기, 삭제이미지도 안보이게
 $('#delete').click(function(){
 	$('[name=birth]').val('');
-	$('#delete').css('display','none');
+	$('#delete').css('display', 'none');
 });
 
-//$('#post').click(function () {
-$('#post').on('click',function () {	
+// $('#post').click(function(){
+$('#post').on('click', function(){	
     new daum.Postcode({
         oncomplete: function(data) {
-        	console.log(data);
-        	$('[name=post]').val(data.zonecode);
+			console.log( data );
+        	$('[name=post]').val( data.zonecode );
         	//R:도로명주소, J:지번주소
-        	var address = data.userSelectType == 'R' ? data.roadAddress : data.jibunAddress;
-        	if(data.buildingName!='') address += '(' + data.buildingName + ')';
-        	$('[name=address]').eq(0).val(address);     	
+        	var address = data.userSelectedType == 'R' 
+        					? data.roadAddress : data.jibunAddress;
+        	if(data.buildingName!='') address += ' ('+data.buildingName+')';
+        	$('[name=address]').eq(0).val( address );
         }
     }).open();
 });
 
-
 </script>
-<jsp:include page="/include/footer.jsp"/>			
+<jsp:include page="/include/footer.jsp"/>	
 </body>
 </html>
