@@ -1,0 +1,3 @@
+솔트: 비밀번호를 해시 처리하는 단방향 함수의 입력으로 사용할 랜덤데이터
+alter table member add
+( salt varchar2(300), salt_pw varchar2(300) );

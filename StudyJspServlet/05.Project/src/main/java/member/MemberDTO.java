@@ -1,10 +1,25 @@
 package member;
 
 public class MemberDTO {
-	private String userid, name, userpw, gender, email, birth, phone, post, address, admin;
+	private String userid, name, userpw, gender, email, salt, salt_pw
+				, birth, phone, post, address, admin;
 
-	
-	
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
+
+	public String getSalt_pw() {
+		return salt_pw;
+	}
+
+	public void setSalt_pw(String salt_pw) {
+		this.salt_pw = salt_pw;
+	}
+
 	public String getPost() {
 		return post;
 	}

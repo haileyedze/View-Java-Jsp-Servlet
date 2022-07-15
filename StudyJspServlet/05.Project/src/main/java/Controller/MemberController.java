@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.eclipse.jdt.internal.compiler.lookup.MemberTypeBinding;
+
+import common.CommonUtil;
 import member.MemberDAO;
 import member.MemberDTO;
 
@@ -20,11 +23,28 @@ public class MemberController extends HttpServlet {
 		String uri = request.getServletPath();
 		String view = "";
 		MemberDAO dao = new MemberDAO();
+		CommonUtil util = new CommonUtil();
 		if( uri.equals("/join.mb") ) {
 			//회원가입화면 요청
 			//응답화면연결-회원가입화면
 			view = "/member/join.jsp";
 			
+		}else if( uri.equals("/iotlogin.mb")) {
+			//로그인처리 요청
+			//화면에서 입력한 아이디와 비밀번호가 일치하는 
+			//회원정보를 DB에서 조회해와
+			MemberDTO dto
+				= dao.member_login( request.getParameter("id")
+							, request.getParameter("pw") );
+			//세션에 저장한다.
+			request.getSession().setAttribute("userInfo", dto);
+			response.getWriter().print(dto==null ? false : true);
+			return;
+			
+		}else if( uri.equals("/login.mb")) {
+			//로그인화면 요청
+			view = "/member/login.jsp";
+
 		}else if( uri.equals("/id_check.mb")) {
 			//아이디 중복확인 요청
 			//화면에서 입력한 아이디가 DB에 존재하는지 확인: 비지니스로직 - DB연결처리와 관련있음
@@ -35,8 +55,17 @@ public class MemberController extends HttpServlet {
 			
 		}else if( uri.equals("/member_join.mb")) {
 			//회원가입처리 요청
+			
+			//비밀번호 암호화를 위한 salt 생성
+			String salt = util.generateSalt();
+			String salt_pw = util.getEncrypt(
+					request.getParameter("userpw"), salt);
+			
 			//화면에서 입력한 회원정보를 데이터객체(DTO)에 담는다
 			MemberDTO dto = new MemberDTO();
+			dto.setSalt(salt);
+			dto.setSalt_pw(salt_pw);
+			
 			dto.setName( request.getParameter("name") );
 			dto.setUserid( request.getParameter("userid") );
 			dto.setUserpw( request.getParameter("userpw") );
@@ -58,6 +87,8 @@ public class MemberController extends HttpServlet {
 			
 			msg.append("<script>");
 			if( dao.member_join(dto)==1 ) {
+				//회원가입 축하 메일 전송하기 - 파라메터로 써도 됨
+				util.sendEmail(dto.getEmail(), dto.getName(), request);
 				msg.append("alert('회원가입 축하^^'); location=");
 				msg.append("'").append( request.getContextPath() ).append("';");
 				//msg.append("'" + request.getContextPath() + "'");

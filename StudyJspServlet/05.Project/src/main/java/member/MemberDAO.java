@@ -1,6 +1,7 @@
 package member;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -31,9 +32,18 @@ public class MemberDAO {
 	public MemberDTO member_myinfo(String userid) {
 		return null;
 	}
-	//아이디 중복확인
+	//아이디 중복확인 
 	public int member_id_check(String userid) {
 		return sql.selectOne("member.id_check", userid);
+	}
+	
+	//로그인하기
+	public MemberDTO member_login(String id, String pw) {
+		HashMap<String, String> map
+				=	new HashMap<String, String>();
+		map.put("id", id);
+		map.put("pw", pw);
+		return sql.selectOne("member.login", map);
 	}
 	
 	//내정보변경

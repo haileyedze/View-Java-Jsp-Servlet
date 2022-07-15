@@ -5,7 +5,24 @@
     */
     // 
 // Scripts
-// 
+//
+
+//$(function(){
+	
+	function emptyCheck(){
+		var ok = true;
+		$('.chk').each(function(){
+			if( $(this).val()=='' ){
+				alert('입력하세요');
+				$(this).focus();
+				ok = false;
+				return ok;
+			}
+		});
+		return ok;
+	}
+	
+//});
 
 window.addEventListener('DOMContentLoaded', event => {
 
