@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@	taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,8 +15,10 @@
 	<div class="list-top">
 		<ul>
 			<!-- 관리자 회원으로 로그인한 경우만 글쓰기 가능 -->
+			<c:if test='${userInfo.admin eq "Y"}'>
 			<li><a class="btn-fill" href="new.no">글쓰기</a></li>
 			<!-- <li><a class="btn-empty">글쓰기</a></li> -->
+			</c:if>
 		</ul>
 	</div>
 	

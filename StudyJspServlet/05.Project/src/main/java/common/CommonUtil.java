@@ -1,5 +1,8 @@
 package common;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -14,38 +17,102 @@ import org.apache.commons.mail.MultiPartEmail;
 import org.apache.commons.mail.SimpleEmail;
 
 public class CommonUtil {
+	
+	//Http 요청결과를 받는 처리
+	public String requestAPI( String apiURL, String property ) {
+		String result = "";
+		try {
+		      URL url = new URL(apiURL);
+		      HttpURLConnection con = (HttpURLConnection)url.openConnection();
+		      con.setRequestMethod("GET");
+		      con.setRequestProperty("Authorization", property);
+		      int responseCode = con.getResponseCode();
+		      BufferedReader br;
+		      System.out.print("responseCode="+responseCode);
+		      if(responseCode==200) { // 정상 호출
+		        br = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"));
+		      } else {  // 에러 발생
+		        br = new BufferedReader(new InputStreamReader(con.getErrorStream(), "utf-8"));
+		      }
+		      String inputLine;
+		      StringBuffer res = new StringBuffer();
+		      while ((inputLine = br.readLine()) != null) {
+		        res.append(inputLine);
+		      }
+		      br.close();
+		      if(responseCode==200) {
+		        result = res.toString();
+		      }
+		    } catch (Exception e) {
+		      System.out.println(e);
+		    }
+		return result;
+	}
+	
+	
+	//Http 요청결과를 받는 처리
+	public String requestAPI( String apiURL ) {
+		String result = "";
+		try {
+		      URL url = new URL(apiURL);
+		      HttpURLConnection con = (HttpURLConnection)url.openConnection();
+		      con.setRequestMethod("GET");
+		      int responseCode = con.getResponseCode();
+		      BufferedReader br;
+		      System.out.print("responseCode="+responseCode);
+		      if(responseCode==200) { // 정상 호출
+		        br = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"));
+		      } else {  // 에러 발생
+		        br = new BufferedReader(new InputStreamReader(con.getErrorStream(), "utf-8"));
+		      }
+		      String inputLine;
+		      StringBuffer res = new StringBuffer();
+		      while ((inputLine = br.readLine()) != null) {
+		        res.append(inputLine);
+		      }
+		      br.close();
+		      if(responseCode==200) {
+		        result = res.toString();
+		      }
+		    } catch (Exception e) {
+		      System.out.println(e);
+		    }
+		return result;
+	}
+	
+	
 	//비밀번호 암호화 - 단방향
 	//비밀번호 까먹었을 때 다시 찾기 위해서는 복호화 가능하게 양방향 쓰고
 	//비밀번호를 새로 만들게 할 때는 단방향 → 현재방식
 	//비밀번호 암호화에 사용할 솔트만들기
 	public String generateSalt() {
 		//암호화 랜덤문자를 만들어주는 기능을 가진 객체
-		SecureRandom random = new SecureRandom();
+		SecureRandom  random = new SecureRandom(); 
 		byte salt[] = new byte[24];
 		random.nextBytes(salt);
 		
-		//각 byte를 16진수로 변환
+		//각 byte 를 16진수로 변환
 		StringBuffer buf = new StringBuffer();
-		for(byte b : salt) {
-			buf.append( String.format("%02x", b));
+		for( byte b : salt ) {
+			buf.append( String.format("%02x", b) );
 		}
-		return buf.toString();
+		return	buf.toString();
 	}
 	
-	//솔트를 사용해서 문자를 암호화하기
+	//솔트를 사용해 문자를 암호화하기
 	public String getEncrypt(String pw, String salt) {
 		String salt_pw = pw + salt;
 		
-		//암호화해시함수를 사용해 암호화 방식 지정
+		//암호화해쉬함수를 사용해 암호화 방식 지정
 		try {
 			MessageDigest md = MessageDigest.getInstance("SHA-256");
-			md.update(salt_pw.getBytes());
+			md.update( salt_pw.getBytes() );
 			byte[] digest = md.digest();
 			
 			//16진수로 변환
 			StringBuffer buf = new StringBuffer();
 			for( byte b : digest ) {
-				buf.append(String.format("%02x", b));
+				buf.append( String.format("%02x", b) );
 			}
 			salt_pw = buf.toString();
 			

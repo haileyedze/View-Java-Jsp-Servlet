@@ -2,7 +2,17 @@ package member;
 
 public class MemberDTO {
 	private String userid, name, userpw, gender, email, salt, salt_pw
-				, birth, phone, post, address, admin;
+				, birth, phone, post, address, admin, social;
+	
+	
+
+	public String getSocial() {
+		return social;
+	}
+
+	public void setSocial(String social) {
+		this.social = social;
+	}
 
 	public String getSalt() {
 		return salt;

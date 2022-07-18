@@ -7,6 +7,12 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="css/member.css" rel="stylesheet">
+<style type="text/css">
+	.naver{
+		background: url("images/naver.png") center;
+		background-size: 100%;
+	}
+</style>
 </head>
 <body>
 <jsp:include page="/include/layout.jsp"/>
@@ -17,6 +23,10 @@
 			<li><input type="text" id="userid" class="chk" placeholder="아이디"></li>
 			<li><input type="password" id="userpw" class="chk" placeholder="비밀번호"></li>
 			<li><input type="button" value="로그인" onclick="login()"></li>
+			<li><hr></li>
+			<li><input type="button" class="naver" onclick="location='naver_login.mb'"/></li>
+			<li><input type="button" class="kakao" onclick="location='kakao_login.mb'"/></li>
+			
 		</ul>
 	</div>
 </div>
