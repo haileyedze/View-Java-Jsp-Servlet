@@ -33,11 +33,10 @@ public class MemberDAO {
 	public MemberDTO member_myinfo(String userid) {
 		return null;
 	}
-	//아이디 중복확인 
+	//아이디 중복확인
 	public int member_id_check(String userid) {
 		return sql.selectOne("member.id_check", userid);
 	}
-	
 	//로그인하기
 	public MemberDTO member_login(String id, String pw) {
 		HashMap<String, String> map
@@ -46,7 +45,6 @@ public class MemberDAO {
 		map.put("pw", pw);
 		return sql.selectOne("member.login", map);
 	}
-	
 	//아이디에 해당하는 salt조회하기
 	public String member_salt(String id) {
 		return sql.selectOne("member.salt", id);
@@ -68,8 +66,4 @@ public class MemberDAO {
 	public void member_pw_encrypt(MemberDTO dto) {
 		sql.update("member.pw_encrypt", dto);
 	}
-	
-	
-	
-	
 }

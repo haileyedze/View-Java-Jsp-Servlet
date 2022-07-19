@@ -19,6 +19,7 @@
 	<mapper resource="customer/cus-mapper.xml"/>
 	
     <mapper resource="mapper/member-mapper.xml"/>
-    <!-- 추후 mapper/*-mapper.xml (전체인식함)  -->
+    <mapper resource="mapper/notice-mapper.xml"/>
+    <!-- 추후 mapper/*-mapper.xml (전체인식함), 처리가 안되서 하나씩 넣고 있음 -->
   </mappers>
 </configuration>

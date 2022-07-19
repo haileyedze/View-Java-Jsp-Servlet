@@ -12,23 +12,28 @@
 		background: url("images/naver.png") center;
 		background-size: 100%;
 	}
+	
+	.kakao{
+		background: url("images/kakao.png") center;
+		background-size: 100%;
+	}
 </style>
 </head>
 <body>
 <jsp:include page="/include/layout.jsp"/>
 <div class="container-fluid px-4">
-	<h3 class="mt-4">로그인</h3>
-	<div class="box">
-		<ul>
-			<li><input type="text" id="userid" class="chk" placeholder="아이디"></li>
-			<li><input type="password" id="userpw" class="chk" placeholder="비밀번호"></li>
-			<li><input type="button" value="로그인" onclick="login()"></li>
-			<li><hr></li>
-			<li><input type="button" class="naver" onclick="location='naver_login.mb'"/></li>
-			<li><input type="button" class="kakao" onclick="location='kakao_login.mb'"/></li>
-			
-		</ul>
-	</div>
+<h3 class="mt-4">로그인</h3>
+<div class='box'>
+	<ul>
+		<li><input type='text' id='userid' class='chk'  placeholder="아이디"></li>
+		<li><input type='password' id='userpw'  class='chk' placeholder="비밀번호"></li>
+		<li><input type='button' value='로그인' onclick='login()'></li>
+		<li><hr></li>
+		<li><input type='button' class='naver' onclick="location='naver_login.mb'"></li>
+		<li><input type='button' class='kakao' onclick="location='kakao_login.mb'"></li>
+	</ul>
+</div>
+
 </div>
 <script>
 $('#userpw').keypress(function(e){
@@ -41,8 +46,6 @@ function login(){
 		url: 'iotlogin.mb',
 		data: { id:$('#userid').val(), pw:$('#userpw').val() },
 		success: function( response ){
-				console.log( response );
-				console.log( JSON.parse(response) );
 			if( JSON.parse(response) ){
 				location = '<c:url value="/"/>';
 			}else{
@@ -57,7 +60,7 @@ function login(){
 
 </script>
 
-<jsp:include page="/include/footer.jsp"/>			
 
+<jsp:include page="/include/footer.jsp"/>
 </body>
 </html>

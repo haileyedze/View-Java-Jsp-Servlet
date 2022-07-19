@@ -3,7 +3,6 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
-
 <!-- 비밀번호를 암호화해서 변경저장하기 -->
 <update id="pw_encrypt">
 update member set salt_pw = #{salt_pw}, salt=#{salt} where userid=#{userid}
@@ -22,16 +21,18 @@ select salt from member where userid=#{id}
 
 <!-- 로그인처리 -->
 <select id='login' resultType="member.MemberDTO">
-<!-- select * from member where userid=#{id} and userpw=#{pw} -->
 select * from member where userid=#{id} and salt_pw=#{pw}
+<!-- select * from member where userid=#{id} and userpw=#{pw} -->
 </select>
 
 <!-- 회원가입처리 -->
 <insert id='join'>
 insert into member
-(userid, userpw, name, gender, email, post, address, phone, birth, salt, salt_pw)
-values (#{userid}, #{userpw}, #{name}, #{gender}, #{email}
-		, #{post}, #{address}, #{phone}, #{birth}, #{salt}, #{salt_pw})
+(userid, userpw, name, gender, email, post, address, phone, birth, salt, salt_pw, social)
+values (#{userid}, #{userpw, jdbcType=VARCHAR}, #{name}, #{gender}, #{email}
+		, #{post, jdbcType=VARCHAR}, #{address, jdbcType=VARCHAR}
+		, #{phone, jdbcType=VARCHAR}, #{birth, jdbcType=VARCHAR}
+		, #{salt, jdbcType=VARCHAR}, #{salt_pw, jdbcType=VARCHAR}, #{social, jdbcType=VARCHAR})
 </insert>
 
 <!-- 아이디 중복확인 -->

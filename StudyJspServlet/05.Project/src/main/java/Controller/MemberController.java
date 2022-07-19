@@ -24,8 +24,9 @@ public class MemberController extends HttpServlet {
 	private String appName(HttpServletRequest request) {
 		//URL → http://192.168.0.58/pj/login.mb
 		//serveletPath → /login.mb
-		return request.getRequestURL().toString().replace(request.getServletPath(), "");
-	}
+		return 
+				request.getRequestURL().toString().replace( request.getServletPath(), "");//http://localhost/pj
+		}
 	
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
@@ -37,32 +38,119 @@ public class MemberController extends HttpServlet {
 		
 		String NAVER_ID = "_iwFZBEJL6KNizx4TrgD";	//네이버 Client ID
 		String NAVER_SECRET = "cjSIEqE5yV";	//네이버 Client Secret
+		String KAKAO_ID = "14800343239997d6f68382652cc92fc9"; //카카오 RestAPI 키
+		
 		
 		if( uri.equals("/join.mb") ) {
 			//회원가입화면 요청
 			//응답화면연결-회원가입화면
 			view = "/member/join.jsp";
 			
+		}else if( uri.equals("/kakao_login.mb")) {
+			//카카오 로그인 처리 요청
+			//https://kauth.kakao.com/oauth/authorize?response_type=code
+			//&client_id=${REST_API_KEY}
+			//&redirect_uri=${REDIRECT_URI}
+
+			StringBuffer url =
+			new StringBuffer("https://kauth.kakao.com/oauth/authorize?response_type=code");
+			url.append("&client_id=").append(KAKAO_ID);
+			url.append("&redirect_uri=").append( appName(request) ).append("/kakao_callback.mb");
+			
+			redirect = true;
+			view = url.toString();
+			
+		}else if( uri.equals("/kakao_callback.mb")) {
+			String code = request.getParameter("code");
+			String error = request.getParameter("error");
+			redirect = true;
+			if( error!=null ) view = request.getContextPath();
+			else {
+				//인가 코드로 토큰 발급을 요청합니다.
+//				curl -v -X POST "https://kauth.kakao.com/oauth/token" \
+//				 -H "Content-Type: application/x-www-form-urlencoded" \
+//				 -d "grant_type=authorization_code" \
+//				 -d "client_id=${REST_API_KEY}" \
+//				 --data-urlencode "redirect_uri=${REDIRECT_URI}" \
+//				 -d "code=${AUTHORIZE_CODE}"
+				//사용자정보 가져오기에 사용할 토큰 발급받기
+				StringBuffer url = 
+				new StringBuffer("https://kauth.kakao.com/oauth/token?grant_type=authorization_code");
+				url.append("&client_id=").append(KAKAO_ID);
+				url.append("&code=").append(code);
+				
+				JSONObject json = new JSONObject( util.requestAPI(url.toString()) );
+				String type = json.getString("token_type");
+				String token = json.getString("access_token");
+				
+				//사용자정보 가져오기
+//				curl -v -X GET "https://kapi.kakao.com/v2/user/me" \
+//				  -H "Authorization: Bearer ${ACCESS_TOKEN}"
+				url = new StringBuffer("https://kapi.kakao.com/v2/user/me");
+				json = new JSONObject( util.requestAPI(url.toString(), type+ " " +token) );
+				
+//			    "id": "32742776", :네이버로 로그인시 id
+//				"id": 123456789,  :카카오로 로그인시 id
+//				{
+				
+//				    "kakao_account": { 
+//				        "profile": {
+//				            "nickname": "홍길동",
+//				        },
+//				        "name":"홍길동",
+//				        "email": "sample@sample.com",
+//				        "gender":"female"
+//				    },  
+				if( !json.isEmpty() ) {
+					//카카오정보를 Member테이블의 회원으로 저장
+					MemberDTO dto = new MemberDTO();
+					dto.setSocial("K");
+					dto.setUserid( json.get("id").toString() );
+					
+					json = json.getJSONObject("kakao_account");
+					dto.setName( json.has("name") ? json.getString("name") : "");
+					dto.setEmail( json.getString("email") );
+					dto.setGender( json.has("gender") ? json.getString("gender").equals("female") ? "여" : "남" : "여" );
+					
+					//닉네임이 있으면 name 에 닉네임을 담는다
+					if( json.getJSONObject("profile").has("nickname") ) {
+						dto.setName( json.getJSONObject("profile").getString("nickname") ); 
+					}
+					
+					//카카오로그인이 처음이면 신규저장, 아니면 변경저장
+					if( dao.member_id_check(dto.getUserid())==0 ) {
+						dao.member_join(dto);
+					}else
+						dao.member_update(dto);
+					
+					request.getSession().setAttribute("userInfo", dto);
+				}
+				view = request.getContextPath();
+			}
+
 		}else if( uri.equals("/naver_login.mb")) {
-			//네이버로그인처리 요청
+			//네이버 로그인 처리 요청
+			//https://nid.naver.com/oauth2.0/authorize
 			//?response_type=code
 			//&client_id=CLIENT_ID
 			//&state=STATE_STRING
 			//&redirect_uri=CALLBACK_URL
 			
-			 //세션상태토큰으로 사용할 랜덤문자열 : UUID(Universal Unique ID)
-			 String state = UUID.randomUUID().toString();
-			 request.getSession().setAttribute("state", state);
+			//세션상태토큰으로 사용할 랜덤문자열: UUID(Universal Unique ID)
+			String state = UUID.randomUUID().toString();
+			request.getSession().setAttribute("state", state);
 			 
-			 //Client ID : _iwFZBEJL6KNizx4TrgD
+			//Client ID : _iwFZBEJL6KNizx4TrgD
+			//Client Secret : cjSIEqE5yV
 			 
-			 StringBuffer url = new StringBuffer("https://nid.naver.com/oauth2.0/authorize?response_type=code");
-			 url.append("&client_id=").append(NAVER_ID);
-			 url.append("&state=").append(state);
-			 url.append("&redirect_uri=").append(appName(request)).append("/naver_callback.mb");
+			StringBuffer url 
+			= new StringBuffer("https://nid.naver.com/oauth2.0/authorize?response_type=code");
+			url.append("&client_id=").append(NAVER_ID);
+			url.append("&state=").append(state);
+			url.append("&redirect_uri=").append(appName(request)).append("/naver_callback.mb");
 			 
-			 redirect = true;
-			 view = url.toString();
+			redirect = true;
+			view = url.toString();
 			 
 		}else if( uri.equals("/naver_callback.mb")) {
 			//API 요청 성공시 : http://콜백URL/redirect?code={code값}&state={state값}
@@ -70,19 +158,20 @@ public class MemberController extends HttpServlet {
 			String error = request.getParameter("error");
 			String code = request.getParameter("code");
 			String state = request.getParameter("state");
-			if( error!=null || !state.equals( (String)request.getSession().getAttribute("state")) ) {
-				redirect = true;
+			redirect = true;
+			
+			if( error!=null || !state.equals( (String)request.getSession().getAttribute("state") )) {
 				view = request.getContextPath();
 			}else {
 				//Callback으로 전달받은 'code' 값을 이용하여 '접근토큰발급API'를 호출
-				
+					
 				//https://nid.naver.com/oauth2.0/token?grant_type=authorization_code
 				//&client_id=_iwFZBEJL6KNizx4TrgD
 				//&client_secret=cjSIEqE5yV
 				//&code=EIc5bFrl4RibFls1
 				//&state=9kgsGTfH4j7IyAkg
-				StringBuffer url
-					= new StringBuffer("https://nid.naver.com/oauth2.0/token?grant_type=authorization_code");
+				StringBuffer url 
+				= new StringBuffer("https://nid.naver.com/oauth2.0/token?grant_type=authorization_code");
 				url.append("&client_id=").append(NAVER_ID);
 				url.append("&client_secret=").append(NAVER_SECRET);
 				url.append("&code=").append(code);
@@ -97,10 +186,10 @@ public class MemberController extends HttpServlet {
 				//https://openapi.naver.com/v1/nid/me
 				//Authorization: {토큰 타입] {접근 토큰]
 				url = new StringBuffer("https://openapi.naver.com/v1/nid/me");
-				result =  util.requestAPI(url.toString(), type + " " + token);
+				result = util.requestAPI(url.toString(), type + " " + token);
 				json = new JSONObject(result);
 				
-				if( json.getString("resultcode").equals("00")){
+				if( json.getString("resultcode").equals("00") ) {
 //					  "response": {
 //						    "email": "openapi@naver.com",
 //						    "nickname": "OpenAPI",
@@ -111,24 +200,30 @@ public class MemberController extends HttpServlet {
 //						    "name": "오픈 API",
 //						    "birthday": "10-01"
 //						  }
-					json.getJSONObject("response");
+					json = json.getJSONObject("response");
 					MemberDTO dto = new MemberDTO();
 					dto.setSocial("N");
-					dto.setUserid(json.getString("id"));
-					dto.setEmail(json.getString("email"));
-					dto.setName(json.getString("name"));
-					dto.setGender(json.getString("gender").equals("F") ? "여" : "남");	//M/F →남/여
+					dto.setUserid( json.getString("id") );
+					dto.setEmail( json.getString("email") );
+					dto.setName( json.getString("name") );
+					dto.setGender( json.getString("gender").equals("F") ? "여" : "남" ); //M/F->남/여
+					dto.setPhone( json.has("mobile") ? json.getString("mobile") : "");//이대로 mobile check를 안하면 오류가 생김
 					
 					//회원정보로 저장
-					//네이버로그인이 처음이면 신규저장, 아니면 변경저장
+					//네이버로그인이 처음이면 신규저장 , 아니면 변경저장
+					//네이버로그인이 처음인지 파악: 아이디의 존재여부
 					if( dao.member_id_check( dto.getUserid() ) == 0 ) {
 						//신규저장
+						dao.member_join(dto);
 					}else {
 						//변경저장
+						dao.member_update(dto);
 					}
+					
+					request.getSession().setAttribute("userInfo", dto);
 				}
+				view = request.getContextPath();				
 			}
-			
 			
 		}else if( uri.equals("/iotlogin.mb")) {
 			//로그인처리 요청
@@ -150,8 +245,23 @@ public class MemberController extends HttpServlet {
 			
 		}else if( uri.equals("/logout.mb")) {
 			//로그아웃처리 요청
+			//카카오로그인한 경우 카카오계정도 함께 로그아웃되게
+			String social
+			= ((MemberDTO)request.getSession().getAttribute("userInfo")).getSocial();			
+			
 			request.getSession().removeAttribute("userInfo");
-			view = request.getContextPath();
+			
+			if( social != null && social.equals("K") ) {
+				//curl -v -X GET "https://kauth.kakao.com/oauth/logout
+				//?client_id=${YOUR_REST_API_KEY}
+				//&logout_redirect_uri=${YOUR_LOGOUT_REDIRECT_URI}"
+				StringBuffer url = new StringBuffer("https://kauth.kakao.com/oauth/logout");
+				url.append("?client_id=").append(KAKAO_ID);
+				url.append("&logout_redirect_uri=").append(appName(request));	
+				view = url.toString();
+			}else
+				view = request.getContextPath();
+			
 			redirect = true;
 			
 		}else if( uri.equals("/login.mb")) {

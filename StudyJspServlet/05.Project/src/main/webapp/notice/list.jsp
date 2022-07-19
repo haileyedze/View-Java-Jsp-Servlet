@@ -6,6 +6,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+	.table tr th:first-child {
+	border-right: none;
+}
+
+</style>
 </head>
 <body>
 <%@ include file="/include/layout.jsp"%>
@@ -28,6 +34,14 @@
 			<th class='w-px120'>작성자</th>
 			<th class='w-px120'>작성일자</th>
 		</tr>
+		<c:forEach items="${list}" var="dto">
+			<tr>
+				<td>${dto.title}</td>
+				<td>${dto.name}</td>
+				<%-- <td>${dto.writer}</td> --%>
+				<td>${dto.writedate}</td>
+			</tr>
+		</c:forEach>
 	</table>
 
 </div>
