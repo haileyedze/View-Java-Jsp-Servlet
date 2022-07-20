@@ -11764,14 +11764,24 @@ table tr th:first-child {
 
 table tr td {
 	padding: 6px 10px;
+	
 }
 
 table tr {
 	border-bottom: 1px solid #ccc;
 }
 
+table tr th {
+	background-color: #eee !important
+}
+
 label:not(:last-child){
 	margin-right: 20px;
+}
+
+textarea {
+	resize: none;
+	padding: 10px;		
 }
 
 input {
@@ -11779,9 +11789,17 @@ input {
 	padding: 0 10px;
 }
 
+input[name=title], textarea[name=content]{
+	width: calc(100% - 24px);
+}
+
 input[name=address]{
 	/* width: calc(100% - 9px); */
 	width: 100%;
+}
+
+#delete-file {
+	display: none;
 }
 
 select {
