@@ -1,0 +1,22 @@
+package notice;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import common.Command;
+
+public class NoticeUdate implements Command {
+
+	@Override
+	public void execute(HttpServletRequest request, HttpServletResponse response) {
+		// 화면에서 변경입력한 정보를 DB에 변경저장 : 비지니스로직
+		// 화면에서 변경입력한 정보를 수집한다.
+		NoticeDTO dto = new NoticeDTO();
+		int id = Integer.valueOf(request.getParameter("id"));
+		dto.setId( id );
+		
+		new NoticeDAO().notice_update(null);
+
+	}
+
+}

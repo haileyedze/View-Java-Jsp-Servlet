@@ -1,0 +1,29 @@
+package notice;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import common.Command;
+
+public class NoticeUdate implements Command {
+
+	@Override
+	public void execute(HttpServletRequest request, HttpServletResponse response) {
+		//원래 첨부된 파일정보를 DB에서 조회해온다
+		Integer id = Integer.valueOf(request.getParameter("id"));
+		
+		NoticeDAO dao = new NoticeDAO();
+		NoticeDTO notice = dao.notice_detail(id);
+		
+		
+		// 화면에서 변경입력한 정보를 DB에 변경저장 : 비지니스로직
+		// 화면에서 변경입력한 정보를 수집한다.
+		NoticeDTO dto = new NoticeDTO();
+		
+		//언박싱 자동 Integer → int : Auto UnBoxing
+		dto.setId( id );
+		dto.setTitle(request.getParameter("title"));
+		dto.setContent(request.getParameter("content"));
+		dao.notice_update(dto);
+	}
+}

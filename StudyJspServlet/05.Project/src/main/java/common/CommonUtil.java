@@ -1,11 +1,13 @@
 package common;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
+import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -15,8 +17,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.UUID;
 
-import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import org.apache.commons.mail.EmailAttachment;
@@ -25,6 +28,32 @@ import org.apache.commons.mail.MultiPartEmail;
 import org.apache.commons.mail.SimpleEmail;
 
 public class CommonUtil {
+	
+	//파일다운로드처리
+	public void fileDownload(HttpServletRequest request, HttpServletResponse response
+								, String filename, String filepath) {
+		//다운로드할 파일찾기
+		filepath = request.getServletContext().getRealPath("/"+filepath);
+		File file = new File( filepath );
+		//첨부된 파일의 마임타입을 지정한다
+		String mime = request.getServletContext().getMimeType(filename);		
+		response.setContentType(mime);
+		//첨부파일 다운로드임을 응답객체의 header에 지정한다
+		try {
+			filename = URLEncoder.encode(filename, "utf-8"); 
+			response.setHeader("content-disposition", "attachment; filename="+filename);
+			//Reader/Writer InputStream/OutputStream
+			ServletOutputStream out = response.getOutputStream();
+			BufferedInputStream in = new BufferedInputStream( new FileInputStream(file) );
+			byte buff[] = new byte[1024]; //1024 -> 962   1986
+			int read = 0;
+			while( (read = in.read(buff)) != -1 ) {
+				out.write(buff, 0, read);
+			}
+			in.close();
+			
+		}catch(Exception e) {}
+	}
 	
 	//파일업로드처리
 	public HashMap<String, String> fileUpload(HttpServletRequest request, String category) {
@@ -41,21 +70,19 @@ public class CommonUtil {
 		HashMap<String, String> map = new HashMap<String, String>();
 		try {
 			Collection<Part> files = request.getParts();
-			for( Part file : files ) {
-				System.out.println(file);
-				if( file.getName().contains("file")
+			for(Part file : files) {
+				if( file.getName().contains("file") 
 						&& !file.getSubmittedFileName().isEmpty() ) {
 					String filename = file.getSubmittedFileName();
 					String uuid = UUID.randomUUID().toString() + "_" + filename;
-					//ex) ajoifjwefjawfoaew_abc.txt
-					file.write(filepath + "/" + uuid);
+					//hlfdh87fhlkahfjl_abc.txt
+					file.write( filepath + "/" + uuid );
 					map.put("filename", filename);
 					map.put("filepath", upload + "/" + uuid);
 				}
 			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
 		}
 		return map;
 	}

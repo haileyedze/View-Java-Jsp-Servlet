@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="notice">
+
+<!-- 공지글정보조회 -->
+<select id="detail" resultType="">
+select name, notice.*
+from notice inner join member m
+on notice.writer = m.userid
+
+</select>
+
+
+<!-- 공지글목록조회 -->
+<select id='list' resultType="notice.NoticeDTO">
+select name, n.*
+from notice n inner join member m 
+on n.writer = m.userid
+
+<!--  
+from notice n, member m
+where n.writer = m.userid;
+
+select name, n.*
+from notice n inner join member m 
+on n.writer = m.userid;
+
+select (select name from member where n.writer = userid) name, n.*
+from notice n;
+-->
+</select>
+
+</mapper>

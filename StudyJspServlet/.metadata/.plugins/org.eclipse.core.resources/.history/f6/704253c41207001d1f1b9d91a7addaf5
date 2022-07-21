@@ -1,0 +1,5 @@
+package notice;
+
+public class NoticeDAO {
+	//CRUD: Create, Read, Update, Delete
+}

@@ -1,0 +1,6 @@
+package notice;
+
+public class NoticeDAO {
+	//쿼리문실행기능을 가진 클래스
+	//CRUD: Create, Read, Update, Delete
+}

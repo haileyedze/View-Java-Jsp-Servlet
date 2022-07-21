@@ -1,0 +1,25 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="css/member.css" rel="stylesheet">
+</head>
+<body>
+<jsp:include page="/include/layout.jsp"/>
+<div class="container-fluid px-4">
+	<h3 class="mt-4">로그인</h3>
+	<div class="box">
+		<ul>
+			<li><input type="text" id="userid"/ placeholder="아이디"></li>
+			<li><input type="password" id="userpw"/ placeholder="비밀번호"></li>
+			<li><input type="button" value="로그인" onclick="login()"></li>
+		</ul>
+	</div>
+</div>
+<jsp:include page="/include/footer.jsp"/>			
+
+</body>
+</html>

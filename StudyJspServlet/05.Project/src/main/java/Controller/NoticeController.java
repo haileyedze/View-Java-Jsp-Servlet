@@ -14,9 +14,11 @@ import common.CommonUtil;
 import member.MemberDAO;
 import member.MemberDTO;
 import notice.NoticeDetail;
+import notice.NoticeDownload;
 import notice.NoticeInsert;
 import notice.NoticeList;
 import notice.NoticeRead;
+import notice.NoticeUdate;
 
 @WebServlet("*.no") @MultipartConfig
 public class NoticeController extends HttpServlet {
@@ -33,7 +35,7 @@ public class NoticeController extends HttpServlet {
 		CommonUtil util = new CommonUtil();
 		if( uri.equals("/list.no") ) {
 			/*임의로 로그인처리한 후 나중에 삭제하기*/
-			String id = "admin2";
+			String id = "admin";
 			MemberDAO dao = new MemberDAO();
 			String salt = dao.member_salt(id);
 			String salt_pw = util.getEncrypt("Manager", salt);
@@ -48,6 +50,13 @@ public class NoticeController extends HttpServlet {
 			//rd = request.getRequestDispatcher("/notice/list.jsp");
 			view = "/notice/list.jsp";
 			
+		}else if(  uri.equals("/reply.no") ) {
+			//답글쓰기화면 요청
+			//원글의 정보를 DB에서 조회해온 후
+			//답글쓰기화면에 출력할 수 잇도록 request에 담는다: 비지니스 로직
+			//응답화면연결 - 답글쓰기화면
+			view = "/notice/reply.jsp";
+			
 		}else if(  uri.equals("/detail.no") ) {
 			//조회수 증가처리
 			new NoticeRead().execute(request, response);
@@ -57,6 +66,28 @@ public class NoticeController extends HttpServlet {
 			new NoticeDetail().execute(request, response);
 			//응답화면연결 - 상세화면 
 			view = "/notice/detail.jsp";
+			
+		}else if(  uri.equals("/update.no") ) {
+			//정보수정저장처리 요청
+			//화면에서 변경입력한 정보를 DB에 변경저장한 후 : 비지니스로직
+			new NoticeUdate().execute(request, response);
+			//응답화면연결 - 상세화면
+			view = "detail.no?id="+request.getParameter("id");
+			redirect = true;
+			
+		}else if(  uri.equals("/modify.no") ) {
+			//해당 글의 정보를 DB에서 조회해와서
+			//정보수정화면 요청
+			//수정화면에 출력할 수 있도록 request에 데이터를 담는다: 비지니스로직
+			new NoticeDetail().execute(request, response);
+			//응답화면연결 - 정보수정화면
+			view = "/notice/modify.jsp";
+			
+		}else if(  uri.equals("/download.no") ) {
+			//해당 글에 대한 첨부파일정보를 DB에서 조회해와
+			//클라이언트에 다운로드처리 : 비지니스로직
+			new NoticeDownload().execute(request, response);
+			return;
 			
 		}else if(  uri.equals("/insert.no") ) {
 			//신규공지글 저장처리 요청
