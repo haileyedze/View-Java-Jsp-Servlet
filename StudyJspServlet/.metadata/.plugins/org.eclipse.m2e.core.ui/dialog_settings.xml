@@ -2,12 +2,14 @@
 <section name="Workbench">
 	<section name="wizardPage">
 		<list key="groupId">
+			<item value="CAU"/>
 			<item value="05.Project"/>
 			<item value="04.MybattisMVC"/>
 		</list>
 		<list key="name">
 		</list>
 		<list key="artifactId">
+			<item value="CAU"/>
 			<item value="05.Project"/>
 			<item value="04.MybattisMVC"/>
 		</list>

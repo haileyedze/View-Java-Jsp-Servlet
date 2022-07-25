@@ -1,0 +1,31 @@
+package common;
+
+public class PageDTO {
+	private int pageList; 	//한 페이지당 보여질 목록수
+	private int blockPage; 	//한 블럭당 보여질 페이지수
+	private int totalList; 	//총 목록수:DB에서 조회
+	private int totalPage, totalBlock;  
+	//총 페이지수:  총 목록수 / 페이지당 보여질 목록수, 나머지가 있으면 +1
+	//총 블록수 :   총 페이지수 / 블럭당 보여질 페이지수, 나머지가 있으면 +1
+	private int endList, beginList; //끝 목록번호, 시작 목록번호
+	//각 페이지의 끝 목록번호 :  총 목록수 - (페이지번호-1) * 페이지당 보여질 목록수  
+	//각 페이지의 시작 목록번호 :  끝 목록번호 - (페이지당 보여질 목록수-1)
+	
+	private int curPage, curBlock; //현재페이지번호, 현재블록번호
+	// 블록번호 : 페이지번호 / 블록당 보여질 페이지수, 나머지가 있으면 +1
+	private int endPage, beginPage; //끝 페이지번호, 시작 페이지번호
+	//각 블럭의 끝 페이지번호 : 블록번호 * 블록당 보여질 페이지수
+	//각 블럭의 시작 페이지번호 : 끝 페이지번호 - (블럭당 보여질 페이지수-1)
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}

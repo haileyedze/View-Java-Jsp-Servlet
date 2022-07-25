@@ -11814,6 +11814,11 @@ select {
 	color:#Be2525;
 }
 
+.font-b {
+	font-size: 20px;
+	color:#3367d6;
+}
+
 .valid {
 	font-size: 14px;
 	color: #068704;
@@ -11831,10 +11836,31 @@ input[type=radio]{
 	vertical-align: middle;
 }
 
+.page-list {
+	display: flex;
+	justify-content: center;
+	line-height: 36px;
+}
 
+.page-list span, .page-list a {
+	width: 38px;
+	height: 38px;
+	border: 1px solid transparent;
+	margin: 1px;
+	text-align: center;
+}
 
+.page-list span {
+	border: 1px solid #0040ff;
+	color: #0040ff;
+	font-weight: bolder;
+}
 
-
+.page-list a:hover {
+	background-color: rgba(0, 64, 255,0.1);
+	color: #0040ff !important;
+	font-weight: bolder !important;
+}
 
 
 

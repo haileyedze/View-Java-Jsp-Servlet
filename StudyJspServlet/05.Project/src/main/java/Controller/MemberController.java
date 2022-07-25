@@ -239,6 +239,8 @@ public class MemberController extends HttpServlet {
 //			= dao.member_login( request.getParameter("id")
 //					, request.getParameter("pw") );
 			//세션에 저장한다.
+			
+			//userInfo라고 만들어진 이름이다 파일이 들어온 dto를 칭한다
 			request.getSession().setAttribute("userInfo", dto);
 			response.getWriter().print(dto==null ? false : true);
 			return;

@@ -1,0 +1,21 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@	taglib uri= "http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+<div class="page-list">
+	<c:forEach var="no" begin="${page.beginPage}" end="${page.endPage}">
+		<c:if test='${no eq page.curPage}'><span>${no}</span></c:if>
+		<c:if test='${no ne page.curPage}'><a onclick="page(${no})">${no}</a></c:if>
+	</c:forEach>
+
+
+	<a onclick='page(${page.endPage+1})'><i class="fa-solid fa-angle-right"></i></a>
+	<a onclick='page(${page.totalPage})'><i class="fa-solid fa-angles-right"></i></a>
+
+</div>
+<script>
+function page(no) {
+	$('[name=curPage]').val( no );
+	$('form').submit();
+	
+}
+</script>

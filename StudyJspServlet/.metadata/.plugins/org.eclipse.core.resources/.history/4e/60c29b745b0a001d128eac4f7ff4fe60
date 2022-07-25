@@ -1,0 +1,38 @@
+package controller;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("*.us")
+public class UsersController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+	@Override
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		
+		//페이지 전환 방식인 forward와 redirect방법 보다 간편하게
+		String uri = request.getServletPath();
+		String view = "";
+		Boolean redirect = false;
+		
+		if(uri.equals("/join.us")) {
+			
+		}
+		
+		
+		if(redirect) {
+			response.sendRedirect(view);
+		}else {
+			request.getRequestDispatcher(view).forward(request, response);
+		}
+		
+		
+	}
+}

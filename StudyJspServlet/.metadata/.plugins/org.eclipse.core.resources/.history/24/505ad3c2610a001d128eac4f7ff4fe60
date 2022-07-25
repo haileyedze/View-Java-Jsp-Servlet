@@ -1,0 +1,11 @@
+package users;
+
+import java.sql.Date;
+
+public class UsersDTO {
+	private String userid, name, userpw, gender, email, phone
+					,post, address, admin, salt, salt_pw, social;
+	private Date birth;
+	
+	
+}

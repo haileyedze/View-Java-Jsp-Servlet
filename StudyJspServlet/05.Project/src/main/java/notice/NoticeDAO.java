@@ -12,36 +12,42 @@ public class NoticeDAO {
 	
 	private SqlSession sql = CommonDAO.sql;
 	
+	//공지글 답글저장
+	public void notice_reply_insert(NoticeDTO dto) {
+		sql.insert("notice.reply_insert", dto);
+	}
 	//공지글 신규저장
-	public void notice_insert(NoticeDTO dto){
+	public void notice_insert(NoticeDTO dto) {
 		sql.insert("notice.insert", dto);
 	}
 	
-	//공지글 목록조회
+	//공지글 목록조회: 페이지처리된 형태
+	public NoticePageDTO notice_page(NoticePageDTO page) {
+		//총공지글 목록수를 조회
+		page.setTotalList( sql.selectOne("notice.total", page) );
+		page.setList( sql.selectList("notice.list", page) );
+		return page;
+	}
+	
+	//공지글 목록조회: 페이지처리 없는 형태
 	public List<NoticeDTO> notice_list() {
 		return sql.selectList("notice.list");
 	}
-	
 	//공지글 상세조회
 	public NoticeDTO notice_detail(int id) {
 		return sql.selectOne("notice.detail", id);
-	}
-	
+	}	
 	//공지글 조회수 증가처리
 	public void notice_read(int id) {
 		sql.update("notice.read", id);
 	}
-	
 	//공지글 변경저장
 	public void notice_update(NoticeDTO dto) {
 		sql.update("notice.update", dto);
 	}
-	
 	//공지글 삭제
 	public void notice_delete(int id) {
-		
+		//sql.insert() 도 가능
+		sql.delete("notice.delete", id);
 	}
-	
-	
-	
 }

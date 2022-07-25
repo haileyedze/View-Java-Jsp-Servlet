@@ -30,6 +30,10 @@
 		</td>
 	</tr>
 </table>
+<!-- 원글의 정보 -->
+<input type='hidden' name='root' value='${dto.root}'>
+<input type='hidden' name='step' value='${dto.step}'>
+<input type='hidden' name='indent' value='${dto.indent}'>
 </form>
 <div class='btnSet'>
 	<a class='btn-fill' onclick='if( emptyCheck() ) $("form").submit()'>저장</a>
@@ -41,3 +45,5 @@
 <%@ include file="/include/footer.jsp" %>
 </body>
 </html>
+
+

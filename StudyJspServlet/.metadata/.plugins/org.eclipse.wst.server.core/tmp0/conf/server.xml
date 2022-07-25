@@ -152,7 +152,7 @@
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
       
-      <Context docBase="D:\Study_JspServlet\Workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\ROOT" path="" reloadable="false"/><Context docBase="D:\Study_JspServlet\Workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\05.Project" path="/pj" reloadable="true" source="org.eclipse.jst.jee.server:05.Project"/><Context docBase="D:\Study_JspServlet\Workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\04.MybatisMVC" path="/mvc" reloadable="true" source="org.eclipse.jst.jee.server:04.MybatisMVC"/></Host>
+      <Context docBase="D:\Study_JspServlet\Workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\ROOT" path="" reloadable="false"/><Context docBase="D:\Study_JspServlet\Workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\04.MybatisMVC" path="/mvc" reloadable="true" source="org.eclipse.jst.jee.server:04.MybatisMVC"/><Context docBase="D:\Study_JspServlet\Workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\05.Project" path="/pj" reloadable="true" source="org.eclipse.jst.jee.server:05.Project"/><Context docBase="D:\Study_JspServlet\Workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\CYA" path="/cya" reloadable="true" source="org.eclipse.jst.jee.server:CYA"/></Host>
     </Engine>
   </Service>
 </Server>

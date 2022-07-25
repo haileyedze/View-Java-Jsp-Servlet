@@ -1,0 +1,17 @@
+package notice;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import common.Command;
+
+public class NoticeDelete implements Command {
+
+	@Override
+	public void execute(HttpServletRequest request, HttpServletResponse response) {
+		//화면에서 선택한 공지글을 DB에서 삭제한 후
+		int id = Integer.parseInt( request.getParameter("id") );
+		new NoticeDAO().notice_delete(id);
+	}
+
+}

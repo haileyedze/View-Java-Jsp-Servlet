@@ -1,30 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="로그인"/>
+		<item key="selection" value="userInfo"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="로그인"/>
-			<item value="table\"/>
-			<item value="table"/>
-			<item value="회원가입"/>
-			<item value="index"/>
-			<item value="dataTable"/>
+			<item value="userInfo"/>
+			<item value="row"/>
+			<item value="bg-gradient-primary"/>
+			<item value="container"/>
+			<item value="nav-item dropdown no-arrow"/>
+			<item value="family"/>
+			<item value="sb admin pro"/>
+			<item value="mr-2 d-none d-lg-inline text-gray-600 small"/>
+			<item value="navbar-nav ml-auto"/>
 			<item value="index.html"/>
-			<item value="Start Bootstrap"/>
-			<item value="main"/>
-			<item value="addCustomer"/>
+			<item value="sidebar-brand-text mx-3"/>
+			<item value="nav"/>
+			<item value="container-fluid"/>
+			<item value="page"/>
+			<item value="font-r"/>
 		</list>
 		<list key="replacehistory">
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="655"/>
-		<item key="DIALOG_Y_ORIGIN" value="453"/>
+		<item key="DIALOG_X_ORIGIN" value="1025"/>
+		<item key="DIALOG_Y_ORIGIN" value="296"/>
 		<item key="DIALOG_WIDTH" value="322"/>
 		<item key="DIALOG_HEIGHT" value="391"/>
 		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>

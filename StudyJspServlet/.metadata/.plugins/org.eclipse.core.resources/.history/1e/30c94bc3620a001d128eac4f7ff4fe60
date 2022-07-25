@@ -1,0 +1,25 @@
+package users;
+
+import java.io.IOException;
+
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
+public class UsersDAO {
+	//쿼리문 실행기능을 가진 클래스 SqlSessionTemplate
+	public static SqlSession sql;
+	static {
+		String resource = "mybatis/config.xml";
+		try {
+			SqlSessionFactory factory = new SqlSessionFactoryBuilder().build( Resources.getResourceAsStream(resource) );
+			sql = factory.openSession(true);	//autocommit 해주는 기능임
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+}
