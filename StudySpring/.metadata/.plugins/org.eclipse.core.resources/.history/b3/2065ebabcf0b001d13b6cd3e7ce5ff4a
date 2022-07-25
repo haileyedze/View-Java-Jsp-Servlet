@@ -1,0 +1,11 @@
+Controller에서 View 로 데이터 전달
+1. Model 객체를 이용
+	Controller 의 메소드에 Model 타입의 파라메터변수를 선언.
+	변수.addAttribute("명", 데이터);
+	return 주소;
+
+2. ModelAndView 객체의 이용
+	Controller 의 메소드에 ModelAndView 객체변수를 선언.
+	변수.addObject("명", 데이터);
+	변수.setViewName("응답화면");
+	return 변수;
