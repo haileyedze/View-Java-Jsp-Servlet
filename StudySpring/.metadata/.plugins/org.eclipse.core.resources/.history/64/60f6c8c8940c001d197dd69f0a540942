@@ -1,0 +1,27 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<header>
+	<div class="category">
+		<ul>
+			<li>고객관리</li>
+			<li>사원관리</li>
+			<li>공지사항</li>
+			<li>방명록</li>
+			<li>공공데이터</li>
+			<li>시각화</li>
+		</ul>
+	</div>
+</header>
+<style>
+	header {
+		border-bottom: 1px solid #ccc;
+		display: flex;
+		justify-content: space-between;
+		/* width: calc(100% - 200px); */
+		padding: 0px 100px;
+	}
+	header ul {
+		display: flex;
+	}
+</style>
+<link rel="stylesheet" type="text/css" href="css/common.css">

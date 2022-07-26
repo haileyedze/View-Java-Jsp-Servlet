@@ -1,0 +1,28 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<header>
+	<div>
+		<ul>
+			<li>고객관리</li>
+			<li>사원관리</li>
+			<li>공지사항</li>
+			<li>방명록</li>
+			<li>공공데이터</li>
+			<li>시각화</li>
+		</ul>
+	</div>
+</header>
+<style>
+	header{
+		border-bottom: 1px solid #ccc;
+	}
+
+	header ul {
+		display: flex;
+		justify-content: space-between;
+	}
+	header ul li {
+		display: flex;
+	}
+	
+</style>

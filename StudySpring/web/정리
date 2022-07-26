@@ -11,5 +11,10 @@ Controller에서 View 로 데이터 전달
 	return 변수;
 	
 
-전송된 파라미터 데이터 접근방법
+전송된 파라미터 데이터 접근방법 url?명1=값&명2=값
 1. HttpServletRequest 객체를 이용
+2. @RequestParam 을 이용
+3. 데이터객체(DTO//VO:Value Object)를 이용
+4. @PathVariable을 이용
+ - 경로의 형태로 데이터를 접근하는 것으로 파라미터는 아님
+ 
