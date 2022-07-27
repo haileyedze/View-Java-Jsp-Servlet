@@ -3,7 +3,7 @@
 <header>
 	<div class="category">
 		<ul>
-			<li><a><img src="img/hanul.logo.png"></a></li>
+			<li><a href="/iot/"><img src="img/hanul.logo.png"></a></li>
 			<li><a class="active" href="list.cu">고객관리</a></li>
 			<li><a>사원관리</a></li>
 			<li><a>공지사항</a></li>
@@ -40,8 +40,8 @@
 	
 	
 </style>
-<link rel="stylesheet" type="text/css" href="css/common.css">
-
+<link rel="stylesheet" type="text/css" href="css/common.css?<%=new java.util.Date()%>">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
 
