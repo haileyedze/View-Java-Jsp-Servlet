@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="employee">
+
+<!-- 고객정보조회 -->
+<select id='detail' resultType='employee.EmployeeVO'>
+select *  from employees where employee_id=#{employee_id}
+</select>
+
+<!-- 고객목록조회 -->
+<select id="list" resultType='employee.EmployeeVO'>
+select employee_id, department_id, salary,
+      last_name, first_name, last_name||' '||first_name as name, department_name,
+      job_id, job_title, email, phone_number,hire_date 
+from employees e
+left outer join departments d
+using ( department_id )
+left outer join jobs j
+using ( job_id )
+</select>
+
+</mapper>

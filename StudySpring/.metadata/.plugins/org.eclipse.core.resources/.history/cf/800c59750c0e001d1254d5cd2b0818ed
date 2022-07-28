@@ -1,0 +1,63 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<header>
+	<div class="category">
+		<ul>
+			<li><a href="/iot/"><img src="img/hanul.logo.png"></a></li>
+			<li><a class="active" href="list.cu">고객관리</a></li>
+			<li><a>사원관리</a></li>
+			<li><a>공지사항</a></li>
+			<li><a>방명록</a></li>
+			<li><a>공공데이터</a></li>
+			<li><a>시각화</a></li>
+			
+		</ul>
+	</div>
+</header>
+<style>
+	header {
+		border-bottom: 1px solid #ccc;
+		display: flex;
+		justify-content: space-between;
+		/* width: calc(100% - 200px); */
+		padding: 0px 100px;
+	}
+	header div.category ul {
+		display: flex;
+		font-weight: bold;
+	}
+	header div.category ul li:not(:last-child) {
+		margin-right: 50px;
+	}
+	header div.category ul li a:hover,
+	header div.category ul li a.active {
+		color: #0040ff;
+	}
+	
+	a {
+		cursor: pointer;
+	}
+	
+	
+</style>
+<link rel="stylesheet" type="text/css" href="css/common.css?<%=new java.util.Date()%>">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

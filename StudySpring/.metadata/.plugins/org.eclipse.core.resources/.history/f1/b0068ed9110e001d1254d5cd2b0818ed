@@ -1,0 +1,17 @@
+package com.hanul.iot;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class HrController {
+	//사원목록화면 요청
+	@RequestMapping("/list.hr");
+	public String list() {
+		//DB에서 사원목록을 조회해와 : 비지니스로직
+		//화면에서 출력할 수 있도록 Model에 담는다
+		//응답화면연결
+		return "employee/list";
+	}
+	
+}

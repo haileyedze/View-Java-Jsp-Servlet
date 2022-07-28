@@ -8,8 +8,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<jsp:include page="/WEB-INF/views/include/header.jsp"/>
-<div id='container'>
 <h3>고객목록</h3>
 
 <div class="list-top">
@@ -31,7 +29,5 @@
 </c:forEach>
 </tbody>
 </table>
-</div>
-<jsp:include page="/WEB-INF/views/include/footer.jsp"/>
 </body>
 </html>

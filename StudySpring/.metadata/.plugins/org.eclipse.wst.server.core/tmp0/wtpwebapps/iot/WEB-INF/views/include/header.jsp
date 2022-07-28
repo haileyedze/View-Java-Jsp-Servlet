@@ -1,63 +1,34 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
 <header>
-	<div class="category">
-		<ul>
-			<li><a href="/iot/"><img src="img/hanul.logo.png"></a></li>
-			<li><a class="active" href="list.cu">°í°´°ü¸®</a></li>
-			<li><a>»ç¿ø°ü¸®</a></li>
-			<li><a>°øÁö»çÇ×</a></li>
-			<li><a>¹æ¸í·Ï</a></li>
-			<li><a>°ø°øµ¥ÀÌÅÍ</a></li>
-			<li><a>½Ã°¢È­</a></li>
-			
-		</ul>
-	</div>
+<div class='category'>
+	<ul>
+		<li><a href="<c:url value='/'/>"><img src='img/hanul.logo.png'></a></li>
+		<li><a ${category eq 'cu' ? 'class="active"' : ''} href='list.cu'>ê³ ê°ê´€ë¦¬</a></li>
+		<li><a ${category eq 'hr' ? 'class="active"' : ''} href='list.hr'>ì‚¬ì›ê´€ë¦¬</a></li>
+		<li><a ${category eq 'no' ? 'class="active"' : ''} >ê³µì§€ì‚¬í•­</a></li>
+		<li><a ${category eq 'bo' ? 'class="active"' : ''} >ë°©ëª…ë¡</a></li>
+		<li><a ${category eq 'da' ? 'class="active"' : ''} >ê³µê³µë°ì´í„°</a></li>
+		<li><a ${category eq 'vi' ? 'class="active"' : ''} >ì‹œê°í™”</a></li>
+	</ul>
+</div>
 </header>
 <style>
-	header {
-		border-bottom: 1px solid #ccc;
-		display: flex;
-		justify-content: space-between;
-		/* width: calc(100% - 200px); */
-		padding: 0px 100px;
-	}
-	header div.category ul {
-		display: flex;
-		font-weight: bold;
-	}
-	header div.category ul li:not(:last-child) {
-		margin-right: 50px;
-	}
-	header div.category ul li a:hover,
-	header div.category ul li a.active {
-		color: #0040ff;
-	}
-	
-	a {
-		cursor: pointer;
-	}
-	
-	
+header { 
+	border-bottom:1px solid #ccc;
+	display: flex; 
+	justify-content: space-between;
+	/* width: calc(100% - 200px); */
+	padding: 0 100px;
+}
+header div.category ul { display: flex; font-weight: bold;  }
+header div.category ul li:not(:last-child) { margin-right: 50px }
+header div.category ul li a:hover
+, header div.category ul li a.active { color: #0040ff; }
+
+a { cursor: pointer; }
+
 </style>
-<link rel="stylesheet" type="text/css" href="css/common.css?<%=new java.util.Date()%>">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
