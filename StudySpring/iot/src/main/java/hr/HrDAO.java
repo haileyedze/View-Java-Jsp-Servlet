@@ -7,13 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-//@Repository : db랑 연결하는거고
-//서비스는 커맨드 선언역할(실행)
-//서비스 임플에서 구현
-//@Service : 구현
-//@Autowired 는 또 연결해주는 거고 
-//와우!
-
 @Repository
 public class HrDAO implements HrService {
 	@Autowired @Qualifier("hr") private SqlSession sql;
@@ -26,12 +19,12 @@ public class HrDAO implements HrService {
 
 	@Override
 	public List<EmployeeVO> employee_list() {
-		return sql.selectList("employee.list");
+		return sql.selectList("hr.list");
 	}
 
 	@Override
 	public EmployeeVO employee_detail(int employee_id) {
-		return sql.selectOne("employee.detail", employee_id);
+		return sql.selectOne("hr.detail", employee_id);
 	}
 
 	@Override
@@ -42,8 +35,24 @@ public class HrDAO implements HrService {
 
 	@Override
 	public int employee_delete(int employee_id) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sql.delete("hr.delete", employee_id);
+	}
+
+	@Override
+	public List<DepartmentVO> employee_department_list() {
+		//사원이 속한 부서목록
+		return sql.selectList("hr.employee_department_list");
+	}
+
+	@Override
+	public List<EmployeeVO> employee_list(int department_id) {
+		//부서에 속한 사원목록
+		return sql.selectList("hr.department_employee_list", department_id);
+	}
+
+	@Override
+	public List<DepartmentVO> department_list() {
+		return sql.selectList("hr.department_list");
 	}
 
 }

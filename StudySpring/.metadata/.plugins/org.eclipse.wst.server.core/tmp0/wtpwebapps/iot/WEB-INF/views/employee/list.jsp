@@ -9,31 +9,49 @@
 </head>
 <body>
 <h3>사원목록</h3>
-<table class="w-px1000">
+
+<form method='post' action='list.hr'>
+<div id='list-top' class='w-px1000'>
+<ul>
+	<li>부서명</li>
+	<li><select onchange="$('form').submit()" name='department_id' class='w-px180'>
+			<option value='-1'>전체</option>
+			<c:forEach items='${departments}' var='d'>
+			<option ${d.department_id eq department_id ? 'selected' : ''} 
+				  value='${d.department_id}'>${d.department_name}</option>
+			</c:forEach>
+		</select>
+	</li>
+</ul>
+</div>
+</form>
+
+<div class='w-px1000 tb-wrap'>
+<table class='tb-list'>
 <colgroup>
-	<col width="80px">
-	<col width="200px">
-	<col width="250px">
+	<col width='80px'>
+	<col width='200px'>
+	<col width='300px'>
 	<col>
-	<col width="140px">
+	<col width='140px'>
 </colgroup>
-	<tr>
-		<th>사번</th>
-		<th>성명</th>
-		<th>부서명</th>
-		<th>업무제목</th>
-		<th>입사일자</th>
-	</tr>
-	
-	<c:forEach items='${list}' var="vo">
-		<tr>
-			<td><a href="detail.hr?id=${vo.employee_id}">${vo.employee_id}</td>
-			<td>${vo.name}</td>
-			<td>${vo.department_id}</td>
-			<td>${vo.job_title}</td>
-			<td>${vo.hire_date}</td>
-		</tr>
-	</c:forEach>
+<tr><th>사번</th>
+	<th>성명</th>
+	<th>부서명</th>
+	<th>업무제목</th>
+	<th>입사일자</th>
+</tr>
+<c:forEach items="${list}" var="vo">
+<tr><td>${vo.employee_id}</td>
+	<td><a href="detail.hr?id=${vo.employee_id}">${vo.name}</td>
+<%-- 	<td>${vo.last_name} ${vo.first_name}</td> --%>
+	<td>${vo.department_name}</td>
+	<td>${vo.job_title}</td>
+	<td>${vo.hire_date}</td>
+</tr>
+</c:forEach>
 </table>
+</div>
+
 </body>
 </html>
